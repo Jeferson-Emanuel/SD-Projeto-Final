@@ -23,7 +23,7 @@ dgramClient.on('message', async (msg, serverInfo) => {
 
     netClient.connect(PORT, HOST, () => {
         console.log(`Connected to ${HOST}:${PORT}`);
-        netClient.write('Socket TCP Connected.');
+        netClient.write('Socket TCP Connected.')
     });
 });
 
