@@ -6,14 +6,25 @@ const dgramClient = dgram.createSocket('udp4');
 const netClient = new net.Socket();
 
 // var networkInterfaces = os.networkInterfaces();
-let HOST, PORT;
+let HOST;
+var PORT = 6024;
+var MULTICAST_ADDR = '239.255.255.250';
+
+dgramClient.bind(6025, '26.82.124.220', () => {
+    setInterval(multicastNew, 4000);
+})
 
 dgramClient.on('listening', () => {
     const address = dgramClient.address();
     console.log(`Client listening ${address.address}:${address.port}`);
 });
 
-dgramClient.send('', 9999);
+function multicastNew() {
+    var message = Buffer.from("Multicast message!");
+    dgramClient.send(message, 0, message.length, PORT, MULTICAST_ADDR, () => {
+        console.log("Sent '" + message + "'");
+    });
+};
 
 dgramClient.on('message', async (msg, serverInfo) => {
     console.log(`Server answered: ${msg} from ${serverInfo.address}:${serverInfo.port}`);
@@ -26,6 +37,8 @@ dgramClient.on('message', async (msg, serverInfo) => {
         netClient.write('Socket TCP Connected.');
     });
 });
+
+
 
 // dgramClient.bind(0, networkInterfaces.Ethernet[0].address);
 

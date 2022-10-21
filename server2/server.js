@@ -2,10 +2,12 @@ var os = require('os');
 var dgram = require('dgram');
 
 var networkInterfaces = os.networkInterfaces();
+console.log(networkInterfaces);
 
 var SRC_PORT = 6025;
 var PORT = 6024;
-var HOST_IP_ADDRESS = networkInterfaces.Ethernet[0].address;
+var HOST_IP_ADDRESS = '26.82.124.220';
+// var HOST_IP_ADDRESS = networkInterfaces.Ethernet[0].address;
 var MULTICAST_ADDR = '239.255.255.250';
 var server = dgram.createSocket("udp4");
 
